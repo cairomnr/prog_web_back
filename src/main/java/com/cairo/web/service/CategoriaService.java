@@ -1,5 +1,6 @@
 package com.cairo.web.service;
 
+import com.cairo.web.entity.Produto;
 import com.cairo.web.entity.Categoria;
 import com.cairo.web.exceptions.UnprocessableEntityException;
 import com.cairo.web.repository.CategoriaRepository;
@@ -59,6 +60,17 @@ public class CategoriaService {
      */
     public Categoria buscarPorId(long id) {
         return categoriaRepository.findOne(id);
+    }
+    
+    /**
+     * Recupera a lista de produtos de acordo com a categoria informada.
+     * 
+     * @param id
+     * @return
+     */
+    public List<Produto> buscarProdutosPorCategoria(long id) {
+    	Categoria c = this.buscarPorId(id);
+    	return c.getProdutos();
     }
 
     private void validarCamposObrigatorios(Categoria categoria) {
