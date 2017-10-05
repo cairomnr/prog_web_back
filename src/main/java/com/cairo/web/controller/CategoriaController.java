@@ -34,7 +34,7 @@ public class CategoriaController {
     }
 
     @PutMapping(value = "{id}")
-    public ResponseEntity<?> altualizar(@RequestBody Categoria categoria, @PathVariable("id") long id) {
+    public ResponseEntity<?> atualizar(@RequestBody Categoria categoria, @PathVariable("id") long id) {
         categoria.setId(id);
         categoriaService.salvar(categoria);
         return new ResponseEntity<Object>(null, HttpStatus.OK);
@@ -43,6 +43,12 @@ public class CategoriaController {
     @DeleteMapping(value = "{id}")
     public ResponseEntity<?> deletar(@PathVariable("id") long id) {
         this.categoriaService.deletar(id);
+        return new ResponseEntity<Object>(null, HttpStatus.NO_CONTENT);
+    }
+
+    @DeleteMapping(value = "{id}/produto")
+    public ResponseEntity<?> deletarProdutosVinculados(@PathVariable("id") long id) {
+        this.categoriaService.deletarProdutosVinculados(id);
         return new ResponseEntity<Object>(null, HttpStatus.NO_CONTENT);
     }
 

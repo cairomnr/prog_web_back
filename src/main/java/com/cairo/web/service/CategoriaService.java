@@ -1,6 +1,7 @@
 package com.cairo.web.service;
 
 import com.cairo.web.entity.Categoria;
+import com.cairo.web.entity.Produto;
 import com.cairo.web.exceptions.UnprocessableEntityException;
 import com.cairo.web.repository.CategoriaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +17,9 @@ public class CategoriaService {
 
     @Autowired
     private CategoriaRepository categoriaRepository;
+
+    @Autowired
+    private ProdutoService produtoService;
 
     /**
      * Recupera a lista de categorias cadastradas no sistema.
@@ -61,6 +65,24 @@ public class CategoriaService {
         return categoriaRepository.findOne(id);
     }
 
+    /**
+     * Deleta todos os produtos vinculados a categoria informada.
+     *
+     * @param id
+     */
+    public void deletarProdutosVinculados(long id) {
+        Categoria categoria = this.buscarPorId(id);
+
+        for(Produto p : categoria.getProdutos()) {
+            produtoService.deletar(p.getId());
+        }
+    }
+
+    /**
+     * Valida o preenchimento dos campos obrigatorios.
+     *
+     * @param categoria
+     */
     private void validarCamposObrigatorios(Categoria categoria) {
         boolean existeErros = false;
 

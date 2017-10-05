@@ -39,6 +39,10 @@ public class ProdutoService {
         if(produto.getId() != 0) {
             Produto p = produtoRepository.findOne(produto.getId());
 
+            if(produto.getCategoria() == null) {
+                produto.setCategoria(p.getCategoria());
+            }
+
             if(p != null) {
                 produtoRepository.save(produto);
             } else {
