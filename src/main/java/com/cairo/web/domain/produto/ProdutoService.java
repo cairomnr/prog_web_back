@@ -1,10 +1,12 @@
-package com.cairo.web.service;
+package com.cairo.web.domain.produto;
 
-import com.cairo.web.entity.Categoria;
-import com.cairo.web.entity.Produto;
-import com.cairo.web.exceptions.UnprocessableEntityException;
-import com.cairo.web.repository.CategoriaRepository;
-import com.cairo.web.repository.ProdutoRepository;
+import com.cairo.web.core.exceptions.CustomNotFoundException;
+import com.cairo.web.core.exceptions.DuplicatedException;
+import com.cairo.web.domain.categoria.Categoria;
+import com.cairo.web.domain.produto.Produto;
+import com.cairo.web.core.exceptions.UnprocessableEntityException;
+import com.cairo.web.domain.categoria.CategoriaRepository;
+import com.cairo.web.domain.produto.ProdutoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -33,24 +35,34 @@ public class ProdutoService {
      *
      * @param produto
      */
-    public void salvar(Produto produto) {
+    public Produto salvar(Produto produto) {
         this.validaCamposObrigatorios(produto);
+        Produto produtoSalvo = null;
 
-        if(produto.getId() != 0) {
+        if (produto.getId() != 0) {
             Produto p = produtoRepository.findOne(produto.getId());
 
-            if(produto.getCategoria() == null) {
+            if (produto.getCategoria() == null) {
                 produto.setCategoria(p.getCategoria());
             }
 
-            if(p != null) {
-                produtoRepository.save(produto);
+            if (p != null) {
+                produtoSalvo = produtoRepository.save(produto);
             } else {
-                // Lançar exception
+                throw new CustomNotFoundException("Produto nao encontrado");
             }
         } else {
-            produtoRepository.save(produto);
+
+            Produto p = this.produtoRepository.findByNome(produto.getNome());
+
+            if (p != null) {
+                throw new DuplicatedException("Produto ja cadastrado.");
+            }
+
+            produtoSalvo = produtoRepository.save(produto);
         }
+
+        return produtoSalvo;
     }
 
     /**
@@ -59,23 +71,29 @@ public class ProdutoService {
      * @param id
      */
     public void deletar(long id) {
-        Produto categoria = produtoRepository.findOne(id);
+        Produto produto = produtoRepository.findOne(id);
 
-        if (categoria != null) {
-            produtoRepository.delete(id);
-        } else {
-            // lançar exception
+        if (produto == null) {
+            throw new CustomNotFoundException("Produto nao encontrado.");
         }
+
+        produtoRepository.delete(id);
     }
 
     /**
-     * Recupera os dados de uma categoria de acordo com o id informado.
+     * Recupera os dados de uma produto de acordo com o id informado.
      *
      * @param id
      * @return Categoria
      */
     public Produto buscarPorId(long id) {
-        return produtoRepository.findOne(id);
+        Produto p = produtoRepository.findOne(id);
+
+        if (p == null) {
+            throw new CustomNotFoundException("Nenhum registro encontrado");
+        }
+
+        return p;
     }
 
     /**
@@ -86,6 +104,11 @@ public class ProdutoService {
      */
     public List<Produto> buscarProdutosPorCategoria(long id) {
         Categoria categoria = this.categoriaRepository.findOne(id);
+
+        if (categoria == null) {
+            throw new CustomNotFoundException("Categoria nao encontrada");
+        }
+
         return this.produtoRepository.buscarProdutosPorCategoria(categoria);
     }
 

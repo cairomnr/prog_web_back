@@ -1,4 +1,4 @@
-package com.cairo.web.exceptions;
+package com.cairo.web.core.exceptions;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;

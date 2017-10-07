@@ -1,4 +1,6 @@
-package com.cairo.web.entity;
+package com.cairo.web.domain.produto;
+
+import com.cairo.web.domain.categoria.Categoria;
 
 import javax.persistence.*;
 import java.io.Serializable;

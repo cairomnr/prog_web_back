@@ -1,9 +1,7 @@
-package com.cairo.web.repository;
+package com.cairo.web.domain.categoria;
 
-import com.cairo.web.entity.Categoria;
+import com.cairo.web.domain.categoria.Categoria;
 import org.springframework.data.jpa.repository.JpaRepository;
-
-import java.util.List;
 
 public interface CategoriaRepository extends JpaRepository<Categoria, Long> {
 

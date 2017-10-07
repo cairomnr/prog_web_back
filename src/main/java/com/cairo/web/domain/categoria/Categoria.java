@@ -1,5 +1,6 @@
-package com.cairo.web.entity;
+package com.cairo.web.domain.categoria;
 
+import com.cairo.web.domain.produto.Produto;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
