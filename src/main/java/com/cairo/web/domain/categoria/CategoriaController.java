@@ -10,6 +10,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("categoria")
+@CrossOrigin(origins = "*")
 public class CategoriaController extends RestAbstractController {
 
     @Autowired
@@ -95,3 +96,4 @@ public class CategoriaController extends RestAbstractController {
     }
 
 }
+
