@@ -79,6 +79,15 @@ public class ProdutoService {
 
         produtoRepository.delete(id);
     }
+    
+    /**
+     * Recupera a lista de produtos destaques, cadastrados.
+     *
+     * @return List<Produto>
+     */
+    public List<Produto> buscarProdutosDestaques() {
+        return this.produtoRepository.findByIsDestaque(true);
+    }
 
     /**
      * Recupera os dados de uma produto de acordo com o id informado.

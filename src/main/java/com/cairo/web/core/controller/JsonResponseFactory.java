@@ -14,7 +14,7 @@ public class JsonResponseFactory {
 
     public JsonResponse create(Object content, Map<JsonResponseType, List<String>> messages) {
         JsonResponse jsonResponse = new JsonResponse();
-        jsonResponse.setContent(content);
+        jsonResponse.content = content;
         jsonResponse.setMessages(messages);
         return jsonResponse;
     }

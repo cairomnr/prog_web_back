@@ -20,5 +20,13 @@ public interface ProdutoRepository extends JpaRepository<Produto, Long> {
      * @return
      */
     public Produto findByNome(String nome);
+    
+    /**
+     * Recupera o produto a partir do nome informado.
+     *
+     * @param isDestaque
+     * @return
+     */
+    public List<Produto> findByIsDestaque(boolean isDestaque);
 
 }

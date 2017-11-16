@@ -26,6 +26,19 @@ public class ProdutoController extends RestAbstractController {
         jsonResponseService.addSuccess(ProdutoMessageInterface.msgSucessoConsulta);
         return jsonResponse(produtos);
     }
+    
+    /**
+     * Recupera a lista de produtos destaques, cadastrados.
+     *
+     * @return List<Produto>
+     */
+    @GetMapping(value = "destaque")
+    public ResponseEntity<?> buscarProdutosDestaques() {
+        List<Produto> produtos = this.produtoService.buscarProdutosDestaques();
+        jsonResponseService.addSuccess(ProdutoMessageInterface.msgSucessoConsulta);
+        return jsonResponse(produtos);
+    }
+
 
     /**
      * Recupera o produto pelo atributo 'id' informado.
